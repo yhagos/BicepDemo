@@ -1,0 +1,55 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "eastus"
+        },
+        "adminUsername": {
+            "value": "demo-admin"
+        },
+        "adminPassword": {
+            "value": "1qaz2wsx!QAZ@WSX"
+        },
+        "virtualNetworkName": {
+            "value": "vnet-demo"
+        },
+        "addressPrefix": {
+            "value": "10.0.0.0/16"
+        },
+        "subnetName": {
+            "value": "subnet-demo"
+        },
+        "subnetPrefix": {
+            "value": "10.0.0.0/24"
+        },
+        "nicName": {
+            "value": "nic-demo"
+        },
+        "storageAccountName": {
+            "value": "stdemobiceptraining001"
+        },
+        "vmName": {
+            "value": "vm-demo"
+        },
+        "vmSize": {
+            "value": "Standard_D2s_v3"
+        },
+        "OSVersion": {
+            "value": "2019-datacenter-gensecond"
+        },
+        "publicIpSku": {
+            "value": "Basic"
+        },
+        "publicIpName": {
+            "value": "pip-IPName-001"
+        },
+        "publicIPAllocationMethod": {
+            "value": "Dynamic"
+        },
+        "networkSecurityGroupName": {
+            "value": "nsg-demo-001"
+        }       
+
+    }
+}
