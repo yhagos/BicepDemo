@@ -16,9 +16,13 @@ param publicIpSku string
 param publicIpName string
 param publicIPAllocationMethod string
 param networkSecurityGroupName string
+param subscriptionid string
+param kvResourceGroup string
 
-@description('Unique DNS Name for the Public IP used to access the Virtual Machine.')
-param dnsLabelPrefix string = toLower('${vmName}-${uniqueString(resourceGroup().id, vmName)}')
+param vmCount int = 3 
+
+// @description('Unique DNS Name for the Public IP used to access the Virtual Machine.')
+// param dnsLabelPrefix string = toLower('${vmName}-${uniqueString(resourceGroup().id, vmName)}')
 
 resource stg 'Microsoft.Storage/storageAccounts@2021-04-01' = {
   name: storageAccountName
@@ -29,8 +33,8 @@ resource stg 'Microsoft.Storage/storageAccounts@2021-04-01' = {
   kind: 'Storage'
 }
 
-resource pip 'Microsoft.Network/publicIPAddresses@2021-02-01' = {
-  name: publicIpName
+resource pip 'Microsoft.Network/publicIPAddresses@2021-02-01' = [for i in range(0, vmCount): {
+  name:  'pip-vm-${i}'
   location: location
   sku: {
     name: publicIpSku
@@ -38,10 +42,10 @@ resource pip 'Microsoft.Network/publicIPAddresses@2021-02-01' = {
   properties: {
     publicIPAllocationMethod: publicIPAllocationMethod
     dnsSettings: {
-      domainNameLabel: dnsLabelPrefix
+      domainNameLabel: toLower('pip-vm-${i}-${uniqueString(resourceGroup().id, vmName)}')
     }
   }
-}
+}]
 
 resource securityGroup 'Microsoft.Network/networkSecurityGroups@2021-02-01' = {
   name: networkSecurityGroupName
@@ -88,8 +92,8 @@ resource vn 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   }
 }
 
-resource nic 'Microsoft.Network/networkInterfaces@2021-02-01' = {
-  name: nicName
+resource nic 'Microsoft.Network/networkInterfaces@2021-02-01' = [for i in range(0, vmCount): {
+  name: 'nic-${i}'
   location: location
   properties: {
     ipConfigurations: [
@@ -98,7 +102,7 @@ resource nic 'Microsoft.Network/networkInterfaces@2021-02-01' = {
         properties: {
           privateIPAllocationMethod: 'Dynamic'
           publicIPAddress: {
-            id: pip.id
+            id: pip[i].id
           }
           subnet: {
             id: resourceId('Microsoft.Network/virtualNetworks/subnets', vn.name, subnetName)
@@ -107,17 +111,17 @@ resource nic 'Microsoft.Network/networkInterfaces@2021-02-01' = {
       }
     ]
   }
-}
+}]
 
-resource vm 'Microsoft.Compute/virtualMachines@2021-03-01' = {
-  name: vmName
+resource vm 'Microsoft.Compute/virtualMachines@2021-03-01' = [for i in range(0, vmCount): {
+  name: 'vm-${i}'
   location: location
   properties: {
     hardwareProfile: {
       vmSize: vmSize
     }
     osProfile: {
-      computerName: vmName
+      computerName: 'vm-${i}'
       adminUsername: adminUsername
       adminPassword: adminPassword
     }
@@ -145,7 +149,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-03-01' = {
     networkProfile: {
       networkInterfaces: [
         {
-          id: nic.id
+          id: nic[i].id
         }
       ]
     }
@@ -156,6 +160,11 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-03-01' = {
       }
     }
   }
-}
+}]
 
-output hostname string = pip.properties.dnsSettings.fqdn
+//output hostname string = pip[0].properties.dnsSettings.fqdn
+
+//# works Fine
+//az group create --name rg-demo-001 --location eastus
+//az deployment group create --resource-group rg-demo-001 --template-file main.bicep  --parameters ./parameters.json  --what-if -w 
+//az deployment group create --resource-group rg-demo-001 --template-file main.bicep  --parameters ./parameters.json 
