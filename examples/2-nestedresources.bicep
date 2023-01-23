@@ -38,5 +38,5 @@ resource kv 'Microsoft.KeyVault/vaults@2022-07-01' = {
 output secretId string = kv::adminPwd.id
 
 // README
-// az deployment group create --resource-group rg-kv-001 --template-file 2-withinparent.bicep  --what-if -w
-// az deployment group create --resource-group rg-kv-001 --template-file 2-withinparent.bicep
+// az deployment group create --resource-group rg-kv-001 --template-file 2-nestedresources.bicep  --what-if -w
+// az deployment group create --resource-group rg-kv-001 --template-file 2-nestedresources.bicep

@@ -16,8 +16,8 @@ param publicIpSku string
 param publicIpName string
 param publicIPAllocationMethod string
 param networkSecurityGroupName string
-param subscriptionid string
-param kvResourceGroup string
+//param subscriptionid string
+//param kvResourceGroup string
 
 param vmCount int = 3 
 
@@ -34,7 +34,8 @@ resource stg 'Microsoft.Storage/storageAccounts@2021-04-01' = {
 }
 
 resource pip 'Microsoft.Network/publicIPAddresses@2021-02-01' = [for i in range(0, vmCount): {
-  name:  'pip-vm-${i}'
+  //name:  'pip-vm-${i}'
+  name:  '${publicIpName}-${i}'
   location: location
   sku: {
     name: publicIpSku
@@ -93,7 +94,8 @@ resource vn 'Microsoft.Network/virtualNetworks@2021-02-01' = {
 }
 
 resource nic 'Microsoft.Network/networkInterfaces@2021-02-01' = [for i in range(0, vmCount): {
-  name: 'nic-${i}'
+  //name: 'nic-${i}'
+  name:  '${nicName}-${i}'
   location: location
   properties: {
     ipConfigurations: [

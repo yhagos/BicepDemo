@@ -1,20 +1,19 @@
 "parameters": {
     "clusterName": {
-        "type": "string" ,
+        "type": "string",
         "defaultValue": "akacluster-001"
     },
     "agentCount": {
-        "type": "int" ,
+        "type": "int",
         "defaultValue": 3,
         "minValue": 1,
         "maxValue": 50,
-
-    }, 
+    },
     "agentVMSize": {
-        "type": "string" ,
+        "type": "string",
         "defaultValue": "Standard_D2s_v3"
-    }, 
+    },
     "sshRSPublicKey": {
-        "type": "string" ,
+        "type": "string",
     },
 }

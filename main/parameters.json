@@ -2,14 +2,8 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "subscriptionid": {
-            "value": "5db106ba-450b-406d-9bd6-42521f38b59c"
-        },
         "location": {
             "value": "eastus"
-        }, 
-        "kvResourceGroup": {
-            "value": "yonastest1"
         }, 
         "adminUsername": {
             "value": "demo-admin"
@@ -48,7 +42,7 @@
             "value": "Basic"
         },
         "publicIpName": {
-            "value": "pip-IPName-001"
+            "value": "pip-demo"
         },
         "publicIPAllocationMethod": {
             "value": "Dynamic"
