@@ -13,3 +13,5 @@ param storageAccountType string = 'Standard_LRS'
 
 @description('Location for all resources.')
 param location string = resourceGroup().location
+
+

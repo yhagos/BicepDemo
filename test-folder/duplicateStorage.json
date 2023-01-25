@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "storageAccounts_yhmigrationstorage_name": {
-            "defaultValue": "yhmigrationstorage02",
+            "defaultValue": "yhmigrationstorage09",
             "type": "String"
         }
     },

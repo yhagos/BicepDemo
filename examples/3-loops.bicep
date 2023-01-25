@@ -5,6 +5,7 @@ param adminPassword string
 param location string = 'eastus'
 param tenantid string = '72f988bf-86f1-41af-91ab-2d7cd011db47'
 param objectid string = '748f4c49-03e3-44e5-8ca8-03a4e3f4445a'
+param secname string = 'secname'
 
 resource kvs 'Microsoft.KeyVault/vaults@2022-07-01' = [for i in range(0, keyVaultCount): {
   name: 'kv-bicepdemo-yhloop${i}'

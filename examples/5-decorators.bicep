@@ -15,15 +15,6 @@ param virtualMachineSize string = 'Standard_DS1_v2'
 param demoEnum string
 
 
-//=======================================================================
-//Resource and Module Decorators:
-//========================================================================
-
-@batchSize(3)
-resource storageAccountResources 'Microsoft.Storage/storageAccounts@2019-06-01' = [for storageName in storageAccounts: {
-  
-}]
-
 //======================================================================================
 //  White spaces and tabs are ignored when authoring Bicep files.
 //  Bicep is newline sensitive. For example:
