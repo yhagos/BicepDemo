@@ -21,9 +21,6 @@ param networkSecurityGroupName string
 
 param vmCount int = 3 
 
-// @description('Unique DNS Name for the Public IP used to access the Virtual Machine.')
-// param dnsLabelPrefix string = toLower('${vmName}-${uniqueString(resourceGroup().id, vmName)}')
-
 resource stg 'Microsoft.Storage/storageAccounts@2021-04-01' = {
   name: storageAccountName
   location: location
@@ -34,7 +31,6 @@ resource stg 'Microsoft.Storage/storageAccounts@2021-04-01' = {
 }
 
 resource pip 'Microsoft.Network/publicIPAddresses@2021-02-01' = [for i in range(0, vmCount): {
-  //name:  'pip-vm-${i}'
   name:  '${publicIpName}-${i}'
   location: location
   sku: {
@@ -94,7 +90,6 @@ resource vn 'Microsoft.Network/virtualNetworks@2021-02-01' = {
 }
 
 resource nic 'Microsoft.Network/networkInterfaces@2021-02-01' = [for i in range(0, vmCount): {
-  //name: 'nic-${i}'
   name:  '${nicName}-${i}'
   location: location
   properties: {
@@ -164,7 +159,6 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-03-01' = [for i in range(0, 
   }
 }]
 
-//output hostname string = pip[0].properties.dnsSettings.fqdn
 
 //# works Fine
 //az group create --name rg-demo-001 --location eastus
