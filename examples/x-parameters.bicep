@@ -1,6 +1,7 @@
 @minLength(3)
 @maxLength(8)
 param deploymentPrefix string
+var tstvar = "123"
 
 @description('Storage Account type')
 @allowed([
